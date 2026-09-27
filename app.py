@@ -322,6 +322,7 @@ else:
                     "path": narration.audio_path,
                     "duration": narration.duration_seconds,
                     "voice": narration.voice,
+                    "engine": narration.engine_used,
                 }
             else:
                 st.error(f"Narration failed: {narration.error}")
@@ -329,7 +330,7 @@ else:
     if st.session_state.current_audio:
         audio = st.session_state.current_audio
         st.audio(audio["path"])
-        st.caption(f"Voice: {audio['voice']} · {audio['duration']}s / 40s cap")
+        st.caption(f"Voice: {audio['voice']} ({audio['engine']}) · {audio['duration']}s / 40s cap")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
