@@ -12,7 +12,11 @@ from dataclasses import dataclass
 
 from groq import Groq
 
-from agents.prompts import STORYTELLER_SYSTEM_PROMPT, get_refusal_message
+from agents.prompts import (
+    STORYTELLER_SYSTEM_PROMPT,
+    get_generation_failed_message,
+    get_refusal_message,
+)
 from utils.security import check_prompt_injection, sanitize_output, check_system_leakage
 
 MODEL_NAME = "openai/gpt-oss-120b"
@@ -117,9 +121,11 @@ def generate_story(
             last_error = exc
             continue
 
-    # Both attempts failed
+    # Both attempts failed -- this is an API/infra failure, NOT a security
+    # refusal, so it must use a different message (avoid implying the user's
+    # prompt was blocked when it was actually a Groq call that failed).
     return StoryResult(
-        text=get_refusal_message(language),
+        text=get_generation_failed_message(language),
         language=language,
         was_refused=True,
         tokens_used=0,
