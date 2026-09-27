@@ -117,6 +117,19 @@ def get_refusal_message(lang: str) -> str:
     return REFUSAL_MESSAGES.get(lang, REFUSAL_MESSAGES["en"])
 
 
+GENERATION_FAILED_MESSAGES = {
+    "en": "Something went wrong generating your story. Please try again in a moment.",
+    "es": "Ocurrió un error al generar tu historia. Inténtalo de nuevo en un momento.",
+    "de": "Beim Erstellen deiner Geschichte ist ein Fehler aufgetreten. Bitte versuche es gleich noch einmal.",
+    "ur": "کہانی بناتے ہوئے کچھ غلط ہو گیا۔ براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔",
+    "ur-roman": "Kahani generate karte waqt kuch masla ho gaya. Thodi dair baad dobara koshish karein.",
+}
+
+
+def get_generation_failed_message(lang: str) -> str:
+    return GENERATION_FAILED_MESSAGES.get(lang, GENERATION_FAILED_MESSAGES["en"])
+
+
 # TTS voice mapping per language (Edge-TTS voice names)
 TTS_VOICE_MAP = {
     "en": "en-US-GuyNeural",       # deep male, works well for horror narration
