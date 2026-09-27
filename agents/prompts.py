@@ -138,3 +138,15 @@ TTS_VOICE_MAP = {
     "ur": "ur-PK-AsadNeural",
     "ur-roman": "ur-PK-AsadNeural",  # same voice, text is phonetic Urdu
 }
+
+# gTTS fallback language codes (used when Edge-TTS is unreachable, e.g. from
+# cloud hosts that Microsoft's endpoint blocks). gTTS has far fewer voice
+# options -- one per language, no "deep/whispering" style -- but it's the
+# more reliable free option when running on Streamlit Community Cloud.
+GTTS_LANG_MAP = {
+    "en": "en",
+    "es": "es",
+    "de": "de",
+    "ur": "ur",
+    "ur-roman": "ur",
+}
