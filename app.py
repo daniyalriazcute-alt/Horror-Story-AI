@@ -267,6 +267,7 @@ if generate_clicked:
                     "text": result.text,
                     "language": language_code,
                     "was_refused": result.was_refused,
+                    "guard_reason": result.guard_reason,
                 }
                 st.session_state.current_audio = None
 
@@ -274,8 +275,11 @@ if generate_clicked:
 if st.session_state.current_story:
     story = st.session_state.current_story
     if story["was_refused"]:
-        st.markdown("**Agent response**")
-        st.markdown(f'<div class="nl-refusal">⚠️ {story["text"]}</div>', unsafe_allow_html=True)
+        is_security_block = story.get("guard_reason", "") == "prompt_injection"
+        icon = "🛡️" if is_security_block else "⚠️"
+        label = "Blocked (security)" if is_security_block else "Generation error"
+        st.markdown(f"**{label}**")
+        st.markdown(f'<div class="nl-refusal">{icon} {story["text"]}</div>', unsafe_allow_html=True)
     else:
         st.markdown("**Generated story**")
         st.markdown(f'<div class="nl-mono">{story["text"]}</div>', unsafe_allow_html=True)
